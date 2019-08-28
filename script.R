@@ -7,7 +7,7 @@ library(data.table)
 ## comando ´Rscript script.R´ após baixar a linguagem R
 
 # alterar caminho do arquivo de texto se preciso
-texto <- readLines("NovoRepublic.txt")
+texto <- readLines("DemCifrado.txt")
 
 ### tabelas de frequencia de letras
 frequency_table <- data.table(letter = c("A","E","O","S","R","I","N","D",
@@ -78,7 +78,7 @@ text_table[ , c("freq", "letter_freq") :=  .(freq = .N/group_size,
 # depois de tu adicionar a frequencia encontrada de cada letra no dataset
 # adiciona uma coluna com a frequencia esperada para aquele dataset
 # mudar a tabela de frequencia dependendo da lingua do dataset
-text_table[, expected := (eng_frequency_table[letter == toupper(text),normal_freq] * group_size)/100
+text_table[, expected := (frequency_table[letter == toupper(text),normal_freq] * group_size)/100
            , by=.(text, group_size)]
 
 decrypt <- function(letters, letter_freq, expected) {
